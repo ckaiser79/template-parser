@@ -1,4 +1,4 @@
-package de.sz.samples.thymeleaf;
+package de.sz.thymeleaf.cmd;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,14 +42,21 @@ public class Main {
 	@Option(name = "--zip", required = false, usage = "if set, out is included with all required resources in a file <out>.zip, not build")
 	private boolean zipParsedResults = false;
 
-	public static void main(String[] args) throws IOException, CmdLineException {
+	public static void main(String[] args) throws IOException {
 
 		Main main = new Main();
 		final CmdLineParser parser = new CmdLineParser(main);
 
-		parser.parseArgument(args);
+		try {
+			parser.parseArgument(args);
 
-		main.run();
+			main.run();
+		} catch (IOException | CmdLineException e) {
+            // handling of wrong arguments
+            System.err.println(e.getMessage());
+            parser.printUsage(System.err);            
+		}
+
 	}
 
 	public Main() {

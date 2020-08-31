@@ -1,4 +1,4 @@
-package de.sz.samples.thymeleaf;
+package de.sz.thymeleaf.cmd;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -12,6 +12,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.sz.thymeleaf.cmd.Main;
 
 public class MainTest {
 
@@ -29,6 +31,15 @@ public class MainTest {
 		File f = new File("target/outfile.html.zip");
 		FileUtils.deleteQuietly(f);
 		
+	}
+	
+	@Test
+	public void testUsage() throws Exception {
+		final String[] args = new String[] {
+				"--help"
+		};
+				
+		Main.main(args);
 	}
 	
 	@Test

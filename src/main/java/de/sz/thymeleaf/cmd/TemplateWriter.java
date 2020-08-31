@@ -1,4 +1,4 @@
-package de.sz.samples.thymeleaf;
+package de.sz.thymeleaf.cmd;
 
 import java.io.File;
 import java.io.IOException;
