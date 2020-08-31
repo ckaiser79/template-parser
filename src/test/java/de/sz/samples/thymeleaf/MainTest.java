@@ -1,6 +1,7 @@
 package de.sz.samples.thymeleaf;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.io.FileReader;
 
@@ -21,8 +22,8 @@ public class MainTest {
 		Main.main(args);
 		
 		final String parsedContent = IOUtils.toString(new FileReader("target/outfile.html"));
-		assertEquals(191, parsedContent.indexOf("<li>FOO</li>"));
-		assertEquals(205, parsedContent.indexOf("<li>BAR</li>"));
+		assertNotEquals(-1, parsedContent.indexOf("<li>FOO</li>"));
+		assertNotEquals(-1, parsedContent.indexOf("<li>BAR</li>"));
 	}
 	
 }
