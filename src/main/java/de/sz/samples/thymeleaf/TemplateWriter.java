@@ -1,5 +1,6 @@
 package de.sz.samples.thymeleaf;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -11,29 +12,32 @@ public class TemplateWriter {
 
 	private final String templateName;
 	private final TemplateEngine templateEngine;
-	
+
 	/**
 	 * @param templateName name of template in classpath:templates/ directory,
-	 *                       must match to templateEngine settings.
+	 *                     must match to templateEngine settings.
 	 */
 	public TemplateWriter(final String templateName) {
 		this.templateName = templateName;
 		templateEngine = createThymeleafEngine();
 	}
+
 	/**
 	 * 
 	 * Write content of template name in <code>templateName.out.html</code>
 	 * 
-	 * @param out writer to store parsed template in   
+	 * @param data
+	 * 
+	 * @param out  writer to store parsed template in
 	 */
-	public void writeSingleFile(final ContextCreationStrategy contextStrategy, final Writer out) throws IOException {
+	public void writeSingleFile(final ContextCreationStrategy contextStrategy, final File data, final Writer out)
+			throws IOException {
 
 		// put variables into template
 		final Context context = contextStrategy.createContext();
 		templateEngine.process(templateName, context, out);
 
 	}
-
 
 	/**
 	 * Look for html files in classpath:templates/

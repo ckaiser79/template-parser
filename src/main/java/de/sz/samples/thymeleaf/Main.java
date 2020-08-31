@@ -1,9 +1,7 @@
 package de.sz.samples.thymeleaf;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -26,8 +24,11 @@ public class Main {
 	@Option(name = "--out", required = true, usage = "write into this file")
 	private File out;
 
-	@Option(name = "--data", required = true, usage = "properties file, where data is read from")
-	private File input;
+	@Option(name = "--variables", required = false, usage = "properties file, where data is read from")
+	private File variables;
+
+	@Option(name = "--data", required = false, usage = "a text/csv file, where data is read from, expected tab separated with headlines")
+	private File data;
 
 	@Option(name = "--encoding", required = false, usage = "encoding for writer")
 	private String encoding = "UTF-8";
@@ -55,24 +56,27 @@ public class Main {
 	}
 
 	public void run() throws IOException {
+		
 		final ContextCreationStrategy strategy;
 
-		if (input.getName().endsWith(".properties")) {
-			try (final FileInputStream fis = new FileInputStream(input)) {
-				PropertiesReadStrategy s = new PropertiesReadStrategy(fis);
-				s.setLocale(new Locale(locale));
-				strategy = s;
-
-			}
-		} else {
-			throw new IllegalArgumentException("Unknown file type " + input.getName());
-		}
+		PropertiesReadStrategy s = new PropertiesReadStrategy(variables, data, new Locale(locale));
+		strategy = s;
 
 		final TemplateWriter writer = new TemplateWriter(template);
-		
+
 		try (final OutputStream fos = new FileOutputStream(out.getAbsolutePath());
 				final OutputStreamWriter outWriter = new OutputStreamWriter(fos, Charset.forName(encoding))) {
-			writer.writeSingleFile(strategy, outWriter);
+			writer.writeSingleFile(strategy, data, outWriter);
+		}
+
+		if (staticResources != null) {
+			new StaticResourceDirectoryAssembler(out, staticResources).run();
+
+			if (zipParsedResults) {
+				final File directoryOutsideZip = out.getParentFile();
+				final File zipFileName = new File(directoryOutsideZip, out.getName() + ".zip");
+				new ZipDirectory().run(out.getParentFile(), zipFileName);
+			}
 		}
 
 		LOGGER.info("Done");

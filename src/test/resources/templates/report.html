@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Title of the document</title>
 <link rel="stylesheet" href="css/bootstrap.css">
@@ -7,11 +8,22 @@
 </head>
 
 <body>
-<ul>
-<li th:text="${foo}">123</li>
-<li th:text="${bar}">123</li>
-</ul>
 
+	<h1 th:text="${foo}">123</h1>
+	<p th:text="${bar}">123</p>
+
+	<table>
+
+		<tbody>
+			<tr th:each="r : ${D}">
+				<td th:text="${r.class}">Y</td>
+				
+				<td th:text="${r.get(0)}">A</td>
+				<td th:text="${r.get(1)}">B</td>
+				<td th:text="${r.get(2)}">C</td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 
 </html>
