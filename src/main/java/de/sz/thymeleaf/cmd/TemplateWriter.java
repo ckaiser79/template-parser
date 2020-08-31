@@ -6,6 +6,7 @@ import java.io.Writer;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 public class TemplateWriter {
@@ -17,9 +18,9 @@ public class TemplateWriter {
 	 * @param templateName name of template in classpath:templates/ directory,
 	 *                     must match to templateEngine settings.
 	 */
-	public TemplateWriter(final String templateName) {
+	public TemplateWriter(final String templateName, final String mode, final String encoding) {
 		this.templateName = templateName;
-		templateEngine = createThymeleafEngine();
+		templateEngine = createThymeleafEngine(mode, encoding);
 	}
 
 	/**
@@ -30,7 +31,7 @@ public class TemplateWriter {
 	 * 
 	 * @param out  writer to store parsed template in
 	 */
-	public void writeSingleFile(final ContextCreationStrategy contextStrategy, final File data, final Writer out)
+	public void writeSingleFile(final PropertiesReadStrategy contextStrategy, final File data, final Writer out)
 			throws IOException {
 
 		// put variables into template
@@ -44,14 +45,27 @@ public class TemplateWriter {
 	 * 
 	 * @return never null
 	 */
-	private static TemplateEngine createThymeleafEngine() {
+	private TemplateEngine createThymeleafEngine(final String mode, final String encoding) {
 		ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
 		resolver.setPrefix("templates/");
-		resolver.setTemplateMode("HTML");
-		resolver.setSuffix(".html");
+		resolver.setCacheable(false);
+		resolver.setCharacterEncoding(encoding);
+		
+		if("txt".equalsIgnoreCase(mode)) {
+			resolver.setTemplateMode(TemplateMode.TEXT);
+			resolver.setSuffix(".txt");
+		}
+		if("html".equalsIgnoreCase(mode)) {
+			resolver.setTemplateMode(TemplateMode.HTML);
+			resolver.setSuffix(".html");
+		}
+		if("xml".equalsIgnoreCase(mode)) {
+			resolver.setTemplateMode(TemplateMode.XML);
+			resolver.setSuffix(".xml");
+		}
 
 		TemplateEngine templateEngine = new TemplateEngine();
-		templateEngine.setTemplateResolver(resolver);
+		templateEngine.setTemplateResolver(resolver);		
 		return templateEngine;
 	}
 

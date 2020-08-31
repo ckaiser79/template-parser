@@ -39,8 +39,11 @@ public class Main {
 	@Option(name = "--static", required = false, usage = "directory with static resources, if set copy them next to outfile")
 	private File staticResources = null;
 
-	@Option(name = "--zip", required = false, usage = "if set, out is included with all required resources in a file <out>.zip, not build")
+	@Option(name = "--zip", required = false, usage = "if set, out file is included with all required resources in a file <out>.zip, requires --staticResources")
 	private boolean zipParsedResults = false;
+		
+	@Option(name = "--template-type", required = false, usage = "txt, html or xml")
+	private String templateType = "html";
 
 	public static void main(String[] args) throws IOException {
 
@@ -64,12 +67,12 @@ public class Main {
 
 	public void run() throws IOException {
 		
-		final ContextCreationStrategy strategy;
+		final PropertiesReadStrategy strategy;
 
 		PropertiesReadStrategy s = new PropertiesReadStrategy(variables, data, new Locale(locale));
 		strategy = s;
 
-		final TemplateWriter writer = new TemplateWriter(template);
+		final TemplateWriter writer = new TemplateWriter(template, templateType, encoding);
 
 		try (final OutputStream fos = new FileOutputStream(out.getAbsolutePath());
 				final OutputStreamWriter outWriter = new OutputStreamWriter(fos, Charset.forName(encoding))) {

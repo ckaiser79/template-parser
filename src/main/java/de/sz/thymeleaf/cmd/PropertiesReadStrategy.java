@@ -24,7 +24,7 @@ import org.thymeleaf.context.Context;
  * @author Christian
  *
  */
-public class PropertiesReadStrategy implements ContextCreationStrategy {
+public class PropertiesReadStrategy {
 
 	private final Locale locale;
 
@@ -43,7 +43,6 @@ public class PropertiesReadStrategy implements ContextCreationStrategy {
 
 	}
 
-	@Override
 	public Context createContext() throws IOException {
 
 		final Context context = new Context(locale);

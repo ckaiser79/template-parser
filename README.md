@@ -1,6 +1,6 @@
 # template-parser
 
-A commandline client for parsing thymeleaf based templates.
+A commandline client for parsing thymeleaf based templates. It loads a variable file + a data csv file which can be looped over in the template in the thymeleaf context.
 
 # Example
 
@@ -32,7 +32,15 @@ java de.sz.thymeleaf.cmd.Main --help
 
 # Configuration
 
-| key | description |
-|:- |:- |
-|CSVCONFIG.delimiter| default is ",". set Field delimiter to use, e.g. \u0009 for TAB |
-|CSVCONFIG.variable_name | default is "D", set name under which data iterator should be available in template context |
+CSVCONFIG.delimiter
+: default is ",". set Field delimiter to use, e.g. \u0009 for TAB 
+
+CSVCONFIG.variable_name 
+: default is "D", set name under which data iterator should be available in template context
+
+# Compile
+
+```
+mvn clean package     # compile, run unit tests, create jar file
+mvn assembly:assemble # to create a zip file with all dependencies for distribution
+```

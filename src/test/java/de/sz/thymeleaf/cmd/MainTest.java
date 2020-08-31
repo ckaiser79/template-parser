@@ -28,7 +28,15 @@ public class MainTest {
 		if (d.exists())
 			FileUtils.deleteDirectory(d);
 
-		File f = new File("target/outfile.html.zip");
+		File f;
+		
+		f = new File("target/outfile.html.zip");
+		FileUtils.deleteQuietly(f);
+		
+		f = new File("target/outfile.html");
+		FileUtils.deleteQuietly(f);
+		
+		f = new File("target/outfile.txt");
 		FileUtils.deleteQuietly(f);
 		
 	}
@@ -87,9 +95,29 @@ public class MainTest {
 	}
 
 	@Test
+	public void testParsingDataAsText() throws Exception {
+		final String[] args = new String[] {
+				"--template", "report.txt",
+				"--variables", "src/test/resources/variables.properties",
+				"--template-type", "txt",
+				"--out", "target/outfile.txt",
+				"--data", "src/test/resources/data.csv",
+		};
+
+		Main.main(args);
+
+		final String parsedContent = IOUtils.toString(new FileReader("target/outfile.txt"));
+
+		assertFalse(new File("target/css/bootstrap.css").exists());
+		assertNotEquals(-1, parsedContent.indexOf("123"));
+		assertNotEquals(-1, parsedContent.indexOf("aaa"));
+		assertNotEquals(-1, parsedContent.indexOf("ccc"));
+	}
+	
+	@Test
 	public void testParsingDataTabSeparated() throws Exception {
 		final String[] args = new String[] {
-				"--template", "report.html",
+				"--template", "report.html", 
 				"--out", "target/outfile.html",
 				"--variables", "src/test/resources/variables-tab.properties",
 				"--data", "src/test/resources/data.tsv",
