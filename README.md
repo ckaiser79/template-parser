@@ -4,11 +4,14 @@ A commandline client for parsing thymeleaf based templates. It loads a variable 
 
 # Example
 
+Create a html report based on `src/main/resources/templates/report.html` in directory `target/outfile.html`.
+
 ```bash
 export CLASSPATH=...
 java de.sz.thymeleaf.cmd.Main \
   --template report.html \
   --out target/outfile.html \
+  --variable src/test/resources/variables.properties \
   --data src/test/resources/data.csv \
   --static src/test/resources/static"
 ```
