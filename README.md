@@ -17,17 +17,19 @@ java de.sz.thymeleaf.cmd.Main \
 
 ```
 java de.sz.thymeleaf.cmd.Main --help
- --data DATEI      : a text/csv file, where data is read from, expected tab
-                     separated with headlines
- --encoding WERT   : encoding for writer (Vorgabe: UTF-8)
- --locale WERT     : template engine locale (Vorgabe: en)
- --out DATEI       : write into this file
- --static DATEI    : directory with static resources, if set copy them next to
-                     outfile
- --template WERT   : name of template from classpath to use
- --variables DATEI : properties file, where data is read from
- --zip             : if set, out is included with all required resources in a
-                     file <out>.zip, not build (Vorgabe: false)
+ --data FILE           : a text/csv file, where data is read from, expected tab
+                         separated with headlines
+ --encoding VALUE      : encoding for writer (Default: UTF-8)
+ --locale VALUE        : template engine locale (Default: en)
+ --out FILE            : write into this file
+ --static FILE         : directory with static resources, if set copy them next
+                         to outfile
+ --template VALUE      : name of template from classpath to use
+ --template-type VALUE : txt, html or xml (Default: html)
+ --variables FILE      : properties file, where data is read from
+ --zip                 : if set, out file is included with all required
+                        resources in a file <out>.zip, requires
+                        --staticResources (Default: false)
 ```
 
 # Configuration
