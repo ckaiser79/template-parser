@@ -43,6 +43,8 @@ CSVCONFIG.delimiter
 CSVCONFIG.variable_name 
 : default is "D", set name under which data iterator should be available in template context
 
+Templates must be located in the classpath in subdirectory `templates`.
+
 # Compile
 
 ```
