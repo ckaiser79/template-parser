@@ -37,11 +37,12 @@ java de.sz.thymeleaf.cmd.Main --help
 
 # Configuration
 
-CSVCONFIG.delimiter
-: default is ",". set Field delimiter to use, e.g. \u0009 for TAB 
+The configuration values are written in the `--properties file` specified. These specifal values are recognized:
 
-CSVCONFIG.variable_name 
-: default is "D", set name under which data iterator should be available in template context
+| Key | Default | Meaning | 
+|:- |:-|:-|
+|CSVCONFIG.delimiter|`,` | set Field delimiter to use, e.g. \u0009 for TAB |
+| CSVCONFIG.variable_name | `D` | name under which data iterator should be available in template context |
 
 Templates must be located in the classpath in subdirectory `templates`.
 
