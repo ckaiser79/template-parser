@@ -2,6 +2,8 @@
 
 A commandline client for parsing thymeleaf based templates. It loads a variable file + a data csv file which can be looped over in the template in the thymeleaf context.
 
+![template-parser overview](template-parser.jpg)
+
 # Example
 
 Create a html report based on `src/main/resources/templates/report.html` in directory `target/outfile.html`.
